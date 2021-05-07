@@ -1,0 +1,51 @@
+<template>
+    <v-layout wrap>
+        <v-card
+        class="mx-auto mb-5"
+        max-width="800"
+        width="100%"
+        min-height="70vh"
+        elevation="2"
+        outlined
+        shaped
+        >
+            <v-card-title>
+                <h3>
+                    {{ currentArticle.text }}
+                </h3>
+            </v-card-title>
+            <v-card-text>
+                <div v-html="currentArticle.body" class="body"></div>
+            </v-card-text>
+        </v-card>
+    </v-layout>
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+export default {
+    data() {
+        return {
+            body: '',
+            articleIndex: 0,
+        }
+    },
+    computed: {
+        ...mapGetters(['articleBody', 'articles']),
+        currentArticle() {
+            const index = this.articles.findIndex(article => article.title.id === this.$route.params.id);
+            this.articleIndex = index;
+
+            return this.articles[index].title
+        },
+    },
+    created() {
+        console.log(this.articleBody.body);
+
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+
+</style>
